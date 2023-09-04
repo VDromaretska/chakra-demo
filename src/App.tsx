@@ -13,20 +13,21 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { TaskView } from "./components/TaskView";
 
-interface TaskCycleData {
+export interface TaskCycleData {
   id: number;
   cycle_name: string;
   cycle_duration_days: number;
   cycle_start_date: Date;
-  completion_percentage?: number;
-  days_overdue?: number;
+  completion_percentage: number;
+  days_overdue: number;
 }
 
 export const baseUrl =
   process.env.NODE_ENV === "production"
     ? "https://cycles-app.onrender.com"
-    : "http//localhost:4000";
+    : "http://localhost:4000";
 
 function App(): JSX.Element {
   const [taskCycleData, setTaskCycleData] = useState<TaskCycleData[]>([]);
@@ -62,26 +63,11 @@ function App(): JSX.Element {
             <p>two!</p>
           </TabPanel>
           <TabPanel>
-            <Flex direction="row" p={4}>
-              <Avatar src="https://media.istockphoto.com/id/1307939278/photo/window-cleaner-using-a-squeegee-to-wash-a-window.jpg?s=612x612&w=0&k=20&c=6eGtUCfEGwWND3CqAJl1blVzZaOiLw_21G1UXtttULM=" />
-              <Box
-                ml="3"
-                borderColor="gray.300"
-                maxW="sm"
-                border="3px"
-                borderWidth="1px"
-                borderRadius="lg"
-              >
-                <Text fontWeight="bold">Window Cleaning</Text>
-                <Badge ml="1" colorScheme="green">
-                  New
-                </Badge>
-              </Box>
-              <CircularProgress value={170} size="50px" color="green.300" />
+            <Flex direction="column" p={10}>
+              {taskCycleData.map((t: TaskCycleData) => (
+                <TaskView task={t} key={t.id} />
+              ))}
             </Flex>
-            <Button colorScheme="red">
-              <Icon as={DeleteIcon} />
-            </Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
