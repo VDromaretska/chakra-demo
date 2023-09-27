@@ -17,12 +17,14 @@ import { TaskView } from "./components/TaskView";
 
 export interface TaskCycleData {
   id: number;
-  cycle_name: string;
-  cycle_duration_days: number;
-  cycle_start_date: Date;
+  name: string;
+  duration_days: number;
+  start_date: Date;
+  avatar_url: string;
   completion_percentage: number;
   days_overdue: number;
-}
+};
+
 
 export const baseUrl =
   process.env.NODE_ENV === "production"
@@ -39,6 +41,7 @@ function App(): JSX.Element {
   async function fetchAndUpdateTaskCycle() {
     try {
       const { data } = await axios.get(baseUrl + "/cycles");
+      data.forEach((obj:TaskCycleData)=> (obj.duration_days = obj.durationDays; ))
       setTaskCycleData(data);
       console.log(data);
     } catch (error) {

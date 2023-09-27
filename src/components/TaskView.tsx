@@ -29,7 +29,7 @@ export function TaskView({ task }: TaskViewProps): JSX.Element {
           borderWidth="1px"
           borderRadius="lg"
         >
-          <Text fontWeight="bold">{task.cycle_name}</Text>
+          <Text fontWeight="bold">{task.name}</Text>
           <Badge ml="1" colorScheme="green">
             {task.days_overdue} days overdue
           </Badge>
